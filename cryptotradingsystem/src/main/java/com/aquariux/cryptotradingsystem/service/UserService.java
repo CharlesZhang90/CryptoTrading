@@ -13,6 +13,6 @@ public interface UserService {
 	
 	BigDecimal getCryptoBalance(Long userId);
 	
-	User createUser(UserDTO userDto);
+	User createUser(UserDTO userDto) throws Exception;
 	
 }

@@ -1,6 +1,7 @@
 package com.aquariux.cryptotradingsystem.service;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public User createUser(UserDTO userDto) {
+	public User createUser(UserDTO userDto) throws Exception {
+		User user = userRepository.findByUserName(userDto.getUserName()).orElse(null);
+		if(Objects.nonNull(user)) {
+			throw new Exception("User already exists.");
+		}
 		return userRepository.save(new User(userDto));
 	}
 }

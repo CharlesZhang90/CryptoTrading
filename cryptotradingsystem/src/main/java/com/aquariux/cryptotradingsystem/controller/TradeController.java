@@ -1,10 +1,10 @@
 package com.aquariux.cryptotradingsystem.controller;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,6 +41,12 @@ public class TradeController {
     
     @GetMapping("/{userId}/trades")
     public ResponseEntity<List<TradeDTO>> getTradeHistoryByUserId(@PathVariable Long userId) {
-        return ResponseEntity.ok().body(tradeService.getTradeHistoryByUserId(userId));
+    	List<TradeDTO> list = new ArrayList<>();
+    	try {
+    		list = tradeService.getTradeHistoryByUserId(userId);
+    	} catch (Exception e) {
+    		return ResponseEntity.badRequest().body(null);
+    	}
+        return ResponseEntity.ok().body(list);
     }
 }

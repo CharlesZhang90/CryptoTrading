@@ -26,14 +26,24 @@ public class UserController {
     @GetMapping("/{userId}/balance")
     public ResponseEntity<BalanceDTO> getWalletBalance(@PathVariable Long userId) {
     	BalanceDTO balanceDto = new BalanceDTO();
-    	balanceDto.setWalletBalance(userService.getWalletBalance(userId).toString());
-    	balanceDto.setCryptoBalance(userService.getCryptoBalance(userId).toString());
+    	try {
+        	balanceDto.setWalletBalance(userService.getWalletBalance(userId).toString());
+        	balanceDto.setCryptoBalance(userService.getCryptoBalance(userId).toString());
+    	} catch (Exception e) {
+    		return ResponseEntity.badRequest().body(null);
+    	}
         return ResponseEntity.ok(balanceDto);
     }
     
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody UserDTO userDto){
-    	return ResponseEntity.ok(userService.createUser(userDto));
+    	User user = null;
+    	try {
+    		user = userService.createUser(userDto);
+    	} catch (Exception e) {
+    		return ResponseEntity.badRequest().body(null);
+    	}
+    	return ResponseEntity.ok(user);
     }
 
 }
