@@ -1,8 +1,13 @@
 # CryptoTrading
 
 1.  Run Crypto Trading System project
+
+    $ Make sure java, maven installed and environment params set correctly
+
     $ cd cryptotradingsystem
+    
     $ mvn spring-boot:run
+    
     
 2.  Test API calls
 
@@ -14,4 +19,4 @@
 			
     	4.	Get Trade History : curl -v localhost:8080/trade/1/trades
 			
-    	5.	Make Trade : curl -v -X POST localhost:8080/trade/1/1?tradeType=BUY&quantity=1
+    	5.	Make Trade : curl -d "tradeType=BUY&quantity=1" -X POST localhost:8080/trade/1/1
