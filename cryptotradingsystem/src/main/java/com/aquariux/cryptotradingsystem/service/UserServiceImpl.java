@@ -54,10 +54,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public User createUser(UserDTO userDto) throws Exception {
-		User user = userRepository.findByUserName(userDto.getUserName()).orElse(null);
-		if(Objects.nonNull(user)) {
-			throw new Exception("User already exists.");
-		}
-		return userRepository.save(new User(userDto));
+		return userRepository.save(userRepository.findByUserName(userDto.getUserName())
+				  			 .map(user -> new User(userDto))
+				  			 .orElseThrow(() -> new Exception("User already exists.")));
 	}
 }
